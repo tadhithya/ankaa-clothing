@@ -27,7 +27,7 @@ function Admin() {
   const token = localStorage.getItem("token"); // 🔥 ADDED
 
   const fetchProducts = async () => {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("https://ankaa-backend.onrender.com/api/products");
     const data = await res.json();
     setProducts(data);
   };
@@ -47,7 +47,7 @@ function Admin() {
       images: [image],
     };
 
-    await fetch("http://localhost:5000/api/products", {
+    await fetch("https://ankaa-backend.onrender.com/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -247,7 +247,7 @@ function Admin() {
             const formData = new FormData();
             formData.append("image", file);
 
-            const res = await fetch("http://localhost:5000/api/upload", {
+            const res = await fetch("https://ankaa-backend.onrender.com/api/upload", {
               method: "POST",
               body: formData,
             });
