@@ -16,7 +16,11 @@ const app = express();
 connectDB();
 
 // ✅ MIDDLEWARES
-app.use(cors());
+app.use(cors({
+  origin: "https://ankaa-clothing.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 // ✅ ROUTES (AFTER APP INIT)
