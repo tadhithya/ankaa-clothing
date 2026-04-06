@@ -26,7 +26,7 @@ app.use("/api/upload", uploadRoutes);
 
 // ✅ TEST ROUTE
 app.get("/", (req, res) => {
-  res.send("API Running...");
+  res.json({ message: "API Running ✅" });
 });
 
 const PORT = process.env.PORT || 5000;
