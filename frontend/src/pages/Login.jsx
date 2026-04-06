@@ -1,33 +1,42 @@
 import { useState } from "react";
 
 function Login() {
-  // ✅ MUST BE INSIDE COMPONENT
+  // ✅ STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-  console.log("Sending:", email, password);
+    console.log("Sending:", email, password);
 
-  const res = await fetch("http://localhost:5000/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
+    try {
+      const res = await fetch("https://ankaa-backend.onrender.com/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-  const data = await res.json(); // ✅ FIRST get data
+      const data = await res.json();
 
-  console.log("Response:", data); // ✅ THEN use it
-  alert(JSON.stringify(data));    // optional debug
+      console.log("Response:", data);
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    window.location.href = "/admin";
-  } else {
-    alert(data.msg || "Login failed");
-  }
-};
+      if (res.ok && data.token) {
+        // ✅ STORE AUTH
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("isAdmin", "true");
+
+        // ✅ REDIRECT
+        window.location.href = "/admin";
+      } else {
+        alert(data.msg || "Login failed");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-black text-white">
